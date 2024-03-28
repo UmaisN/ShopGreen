@@ -12,8 +12,7 @@ export class AppComponent implements OnInit {
   title = 'ShopGreen';
   apiUrl = 'https://localhost:7035/api/products'; 
   products: any[] = [];
-  selectedProduct: any = null;
-    productService: any;
+  selectedProduct: any = null
 
   constructor(private http: HttpClient) { }
 
@@ -37,21 +36,17 @@ export class AppComponent implements OnInit {
       quantity: product.quantity
     };
 
-    return this.http.post(this.apiUrl, body, { headers: headers });
-  }
-
-  onSubmit(productData: any) {
-    this.productService.addProduct(productData).subscribe(
-        (      response: any) => {
+    this.http.post(this.apiUrl, body, { headers: headers }).subscribe(
+      (response) => {
         console.log('Product created', response);
-        // Handle successful creation
+        this.getAllProducts();
       },
-        (      error: any) => {
-        console.error('There was an error!', error);
-        // Handle error case
+      (error) => {
+        console.error('Error creating product:', error);
       }
     );
   }
+
 
   selectProduct(product: any) {
     this.selectedProduct = { ...product }; 
@@ -59,10 +54,15 @@ export class AppComponent implements OnInit {
 
   updateProduct(product: any) {
     this.http.put(`${this.apiUrl}/${product.productId}`, product).subscribe(
-      () => this.getAllProducts(), 
+      () => {
+        this.getAllProducts(); 
+        this.selectedProduct = null; 
+        console.log('Product updated successfully');
+      },
       (error: any) => console.error(error)
     );
   }
+
 
   deleteProduct(productId: number) {
     this.http.delete(`${this.apiUrl}/${productId}`).subscribe(
