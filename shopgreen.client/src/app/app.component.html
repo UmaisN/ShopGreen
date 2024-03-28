@@ -1,24 +1,66 @@
-﻿<h1 id="tableLabel">Weather forecast</h1>
+<div class="container">
+  <h1>{{ title }}</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+  <!-- app.component.html -->
 
-<p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
+  <form (ngSubmit)="addProduct(newProductForm.value)" #newProductForm="ngForm">
+    <!-- form fields -->
+    <input ngModel name="name" type="text" placeholder="Name" required>
+    <input ngModel name="description" type="text" placeholder="Description">
+    <input ngModel name="price" type="number" placeholder="Price" required>
+    <input ngModel name="quantity" type="number" placeholder="Quantity" required>
+    <button type="submit">Create Product</button>
+  </form>
 
-<table *ngIf="forecasts">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let forecast of forecasts">
-            <td>{{ forecast.date }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
-        </tr>
-    </tbody>
-</table>
+  <!-- Update Product Form -->
+  <div *ngIf="selectedProduct">
+    <h2>Update Product</h2>
+    <form (ngSubmit)="updateProduct(selectedProduct)" #updateProductForm="ngForm">
+      <input type="hidden" [(ngModel)]="selectedProduct.productId" name="productId">
+      <div>
+        <label for="update-name">Name:</label>
+        <input id="update-name" type="text" [(ngModel)]="selectedProduct.name" name="name" placeholder="Name" required>
+      </div>
+      <div>
+        <label for="update-description">Description:</label>
+        <input id="update-description" type="text" [(ngModel)]="selectedProduct.description" name="description" placeholder="Description">
+      </div>
+      <div>
+        <label for="update-price">Price:</label>
+        <input id="update-price" type="number" [(ngModel)]="selectedProduct.price" name="price" placeholder="Price" required min="0">
+      </div>
+      <div>
+        <label for="update-quantity">Quantity:</label>
+        <input id="update-quantity" type="number" [(ngModel)]="selectedProduct.quantity" name="quantity" placeholder="Quantity" required min="0">
+      </div>
+      <button type="submit">Update Product</button>
+    </form>
+  </div>
+
+  <!-- Products List -->
+  <div>
+    <h2>Products List</h2>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+      </tr>
+      <tr *ngFor="let product of products">
+        <td>{{ product.productId }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>
+          <button (click)="selectProduct(product)">Edit</button>
+          <button (click)="deleteProduct(product.productId)">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>
