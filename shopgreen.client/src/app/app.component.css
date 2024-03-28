@@ -1,22 +1,86 @@
-﻿:host {
-    max-width: 1280px;
-    padding: 2rem;
-    text-align: center;
+/* General container and spacing */
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
 }
 
-tr:nth-child(even) {
-    background: #F2F2F2;
+h2 {
+  margin-top: 40px;
 }
 
-tr:nth-child(odd) {
-    background: #FFF;
+/* Form styling */
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+  form input, form button {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  form button {
+    grid-column: span 2;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+
+    form button:disabled {
+      background-color: #cccccc;
+    }
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
 }
 
 th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  text-align: left;
+  padding: 8px;
 }
 
-table {
-    margin: 0 auto;
+th {
+  background-color: #4CAF50;
+  color: white;
 }
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Button styling within table */
+table button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+  table button:last-child {
+    margin-right: 0;
+  }
+
+  /* Edit (Update) button style */
+  table button:first-child {
+    background-color: #f4b400;
+  }
+
+  /* Delete button style */
+  table button:last-child {
+    background-color: #f44336;
+  }
